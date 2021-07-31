@@ -1,0 +1,177 @@
+
+//the requirements//
+const mailchimp = require("@mailchimp/mailchimp_marketing");
+
+//Requiring express and body parser and initializing the constant "app"
+const express = require ("express");
+const request = require('request');
+const bodyParser = require ("body-parser");
+const https = require("https");
+const app = express();
+
+//The public folder which holds the CSS
+app.use(express.static ("public"));
+
+
+app.use(bodyParser.urlencoded({extended:true}));
+
+//Sending the signup.html file to the browser as soon as a request is made on localhost:3000
+
+app.get ("/", function (req, res){
+  res.sendFile (__dirname + "/signup.html");
+});
+
+//Listening on port 3000 and if it goes well then logging a message saying that the server is running
+
+app.listen(3000, function(){
+  console.log("Server is running on port 3000");
+});
+
+
+//Setting up MailChimp
+
+//Creating an object with the users data
+mailchimp.setConfig({
+  apiKey: "de04d02544235d2952badd91d6865433-us6",
+  server: "us6"
+});
+
+//As soon as the sign in button is pressed execute this
+app.post("/", function (req, res){
+  //*****************************CHANGE THIS ACCORDING TO THE VALUES YOU HAVE ENTERED IN THE INPUT ATTRIBUTE IN HTML******************************
+
+        const firstName = req.body.fName;
+        const lastName = req.body.lName;
+        const email = req.body.email;
+        console.log (firstName, lastName , email);
+
+        const subscribingUser = {      //Creating an object with the users data
+          firstName: firstName,
+          lastName: lastName,
+          email :email
+          }
+
+    //Uploading the data to the server
+
+    const listId = "8efb5e72ae";//*ENTER YOU LIST ID HERE
+
+
+    const run = async () => {
+      const response = await mailchimp.lists.addListMember(listId, {
+        email_address : subscribingUser.email,
+        status : "subscribed",
+        merge_fields: {
+          FNAME: subscribingUser.firstName,
+          LNAME: subscribingUser.lastName
+      }
+    });
+
+    console.log(response);
+    };
+
+    run();
+
+
+});
+hermoine grqanger hjhj@klkl.com
+{
+  id: '02c6f40d4ead8b780fad352e31310aa4',
+  email_address: 'hjhj@klkl.com',
+  unique_email_id: '201de66595',
+  full_name: 'hermoine grqanger',
+  web_id: 570016185,
+  email_type: 'html',
+  status: 'subscribed',
+  merge_fields: {
+    FNAME: 'hermoine',
+    LNAME: 'grqanger',
+    ADDRESS: '',
+    PHONE: '',
+    BIRTHDAY: ''
+  },
+  stats: { avg_open_rate: 0, avg_click_rate: 0 },
+  ip_signup: '',
+  timestamp_signup: '',
+  ip_opt: '60.52.25.164',
+  timestamp_opt: '2021-07-31T03:10:17+00:00',
+  member_rating: 2,
+  last_changed: '2021-07-31T03:10:17+00:00',
+  language: '',
+  vip: false,
+  email_client: '',
+  location: {
+    latitude: 0,
+    longitude: 0,
+    gmtoff: 0,
+    dstoff: 0,
+    country_code: '',
+    timezone: ''
+  },
+  source: 'API - Generic',
+  tags_count: 0,
+  tags: [],
+  list_id: '8efb5e72ae',
+  _links: [
+    {
+      rel: 'self',
+      href: 'https://us6.api.mailchimp.com/3.0/lists/8efb5e72ae/members/02c6f40d4ead8b780fad352e31310aa4',
+      method: 'GET',
+      targetSchema: 'https://us6.api.mailchimp.com/schema/3.0/Definitions/Lists/Members/Response.json'
+    },
+    {
+      rel: 'parent',
+      href: 'https://us6.api.mailchimp.com/3.0/lists/8efb5e72ae/members',
+      method: 'GET',
+      targetSchema: 'https://us6.api.mailchimp.com/schema/3.0/Definitions/Lists/Members/CollectionResponse.json',
+      schema: 'https://us6.api.mailchimp.com/schema/3.0/Paths/Lists/Members/Collection.json'
+    },
+    {
+      rel: 'update',
+      href: 'https://us6.api.mailchimp.com/3.0/lists/8efb5e72ae/members/02c6f40d4ead8b780fad352e31310aa4',
+      method: 'PATCH',
+      targetSchema: 'https://us6.api.mailchimp.com/schema/3.0/Definitions/Lists/Members/Response.json',
+      schema: 'https://us6.api.mailchimp.com/schema/3.0/Definitions/Lists/Members/PATCH.json'
+    },
+    {
+      rel: 'upsert',
+      href: 'https://us6.api.mailchimp.com/3.0/lists/8efb5e72ae/members/02c6f40d4ead8b780fad352e31310aa4',
+      method: 'PUT',
+      targetSchema: 'https://us6.api.mailchimp.com/schema/3.0/Definitions/Lists/Members/Response.json',
+      schema: 'https://us6.api.mailchimp.com/schema/3.0/Definitions/Lists/Members/PUT.json'
+    },
+    {
+      rel: 'delete',
+      href: 'https://us6.api.mailchimp.com/3.0/lists/8efb5e72ae/members/02c6f40d4ead8b780fad352e31310aa4',
+      method: 'DELETE'
+    },
+    {
+      rel: 'activity',
+      href: 'https://us6.api.mailchimp.com/3.0/lists/8efb5e72ae/members/02c6f40d4ead8b780fad352e31310aa4/activity',
+      method: 'GET',
+      targetSchema: 'https://us6.api.mailchimp.com/schema/3.0/Definitions/Lists/Members/Activity/Response.json'
+    },
+    {
+      rel: 'goals',
+      href: 'https://us6.api.mailchimp.com/3.0/lists/8efb5e72ae/members/02c6f40d4ead8b780fad352e31310aa4/goals',
+      method: 'GET',
+      targetSchema: 'https://us6.api.mailchimp.com/schema/3.0/Definitions/Lists/Members/Goals/Response.json'
+    },
+    {
+      rel: 'notes',
+      href: 'https://us6.api.mailchimp.com/3.0/lists/8efb5e72ae/members/02c6f40d4ead8b780fad352e31310aa4/notes',
+      method: 'GET',
+      targetSchema: 'https://us6.api.mailchimp.com/schema/3.0/Definitions/Lists/Members/Notes/CollectionResponse.json'
+    },
+    {
+      rel: 'events',
+      href: 'https://us6.api.mailchimp.com/3.0/lists/8efb5e72ae/members/02c6f40d4ead8b780fad352e31310aa4/events',
+      method: 'POST',
+      targetSchema: 'https://us6.api.mailchimp.com/schema/3.0/Definitions/Lists/Members/Events/POST.json'
+    },
+    {
+      rel: 'delete_permanent',
+      href: 'https://us6.api.mailchimp.com/3.0/lists/8efb5e72ae/members/02c6f40d4ead8b780fad352e31310aa4/actions/delete-permanent',
+      method: 'POST'
+    }
+  ]
+}
