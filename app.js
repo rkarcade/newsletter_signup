@@ -1,5 +1,7 @@
 
 //the requirements//
+require('dotenv').config()
+
 const mailchimp = require("@mailchimp/mailchimp_marketing");
 
 //Requiring express and body parser and initializing the constant "app"
@@ -8,6 +10,7 @@ const request = require('request');
 const bodyParser = require ("body-parser");
 const https = require("https");
 const app = express();
+
 
 //The public folder which holds the CSS
 app.use(express.static ("public"));
@@ -32,7 +35,7 @@ app.listen(process.env.PORT || 3000, function(){
 
 //Creating an object with the users data
 mailchimp.setConfig({
-  apiKey: "de04d02544235d2952badd91d6865433-us6",
+  apiKey: process.env.API_KEY,
   server: "us6"
 });
 
