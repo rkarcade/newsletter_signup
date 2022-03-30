@@ -57,7 +57,7 @@ app.post("/", function (req, res){
 
     //Uploading the data to the server
 
-    const listId = "8efb5e72ae";//*ENTER YOU LIST ID HERE
+    const listId = process.env.list_Id;//*ENTER YOU LIST ID HERE
 
 
     const run = async () => {
